@@ -5,6 +5,22 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
     //contribution = contribution.parseInt();
     //amount = amount.parseInt();
 
+    //проверка корректности введенных данных
+    if (typeof percent !== 'number' || percent < 0 || isNaN(percent) == true) {
+        alert('Введены некорректные проценты. Рассчеты оказались неверны.');
+        //return;
+    }
+
+    if (typeof contribution !== 'number' || contribution < 0 || isNaN(contribution) == true) {
+        alert('Введена некорректная сумма первоначального взноса. Рассчеты оказались неверны.');
+        //return;
+    }
+
+    if (typeof amount !== 'number' || amount <= 0 || isNaN(amount) == true) {
+        alert('Введены некорректная сумма кредита. Рассчеты оказались неверны.');
+        //return;
+    }
+
     //считаем тело кредита
     let credit = amount - contribution;
     
