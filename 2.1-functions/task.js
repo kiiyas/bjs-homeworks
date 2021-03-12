@@ -63,43 +63,100 @@ let data = {
     english: [4, 3, 4, 5],
     poetry: [5, 4, 4, 3, 3],
     chemistry: [4, 3, 4, 3, 4, 4],
-    french: [5, 4],
+    french: [],
     arts: [5, 4, 5, 5]
 }
 
-function getAverageScore(data) {    
-    
-    let averageMark = 0;
+getAverageScore(data)
+
+getAverageScore(data)
+    //счетчик не зависит от количиства предметов
+    //вычисляем среднее значение к каждому предмету
+    function getAverageScore(data) {    
+
+    let averageMark = 0; 
     let marksArray;
     let newData;
+    let newDataArr = [];
+    let marks = [];
 
-    for (let discipline in data) { //вычисляет среднее значение к каждому предмету
+    //вычисляем среднее значение к каждому предмету
+    for (let discipline in data) { 
         marksArray = data[discipline];
-        let sum;
-        for (let i = 0; i < marksArray.length; i++)
-            sum += marksArray[i];
-        
-        averageMark = sum / marksArray.length;
-    }
-    
-    for (let discipline in data) {
-        newData = (`${discipline}: ${averageMark}`);
-        //console.log(newData);
-    }
-    
-    let marks;
-    let average;
 
-    function getAverageMark(marks) { // вычисляет среднее значение по всем предметам
-        for (let discipline in newData) {
-            //-сложить все значения свойств newData
-            //-разделить на newData.length
+    let sumInDiscipline = 0;  
+    for (let i = 0; i < marksArray.length; i++) {
+        sumInDiscipline += marksArray[i];
+    }
+
+    if (marksArray.length == 0) {        
+        marks.push(0);
+    } else { 
+        averageMark = sumInDiscipline / marksArray.length; 
+        marks.push(averageMark);
         }
-        
-        return average;
+
+    newData = (`${discipline}`); 
+    newDataArr.push(newData);
     }
 
-    newData.average = полученное значение
-    return newData;
+    //вычисляем среднее общее
+    function getAverageMark(marks) {    
+        let marksSum = 0;
+        for (let i = 0; i < marks.length; i++) {
+            marksSum += marks[i];
+            }
+        return marksSum / marks.length;
+    }  
+    let average = getAverageMark(marks);  
+
+    //получаем два ассоц.массива
+    console.log(newDataArr);
+    console.log(marks);
+    //и новое значение
+    console.log(average);
+
+    //собираем новый объект по новым данным
+    let postData = {};
+
+    for (let i = 0; i < newDataArr.length; i++) {
+        let newProp = newDataArr[i];
+        postData[newProp] = marks[i];
+    }  
+    postData['average'] = average;
+
+    console.log(postData);  
+}  
+
+
+
+//КОД ДЛЯ РАСШИФРОВКИ
+
+let secretData = {
+    aaa: 0,
+    bbb: 1
+}
+let decodedData = {};
+
+let secret = getPersonData(secretData);
+
+function getPersonData(secretData) {
+  let secret;
+  let firstName = secretData.aaa;
+  let lastName = secretData.bbb;
+  return secret = [firstName, lastName];
 }
 
+function getDecodedValue(secret) {
+  if (secret[0] == 0) {
+    decodedData.firstName = 'Родриго';
+  } else {decodedData.firstName = 'Эмильо';}
+
+  if (secret[1] == 0) {
+    decodedData.lastName = 'Родриго';
+  } else {decodedData.lastName = 'Эмильо';}
+
+  return decodedData;
+}
+
+getDecodedValue(secret)
