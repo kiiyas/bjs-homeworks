@@ -69,64 +69,64 @@ let data = {
 
 getAverageScore(data)
 
-getAverageScore(data)
-    //счетчик не зависит от количиства предметов
-    //вычисляем среднее значение к каждому предмету
-    function getAverageScore(data) {    
+function getAverageScore(data) {
 
-    let averageMark = 0; 
-    let marksArray;
-    let newData;
-    let newDataArr = [];
-    let marks = [];
-
-    //вычисляем среднее значение к каждому предмету
-    for (let discipline in data) { 
-        marksArray = data[discipline];
-
-    let sumInDiscipline = 0;  
-    for (let i = 0; i < marksArray.length; i++) {
-        sumInDiscipline += marksArray[i];
-    }
-
-    if (marksArray.length == 0) {        
-        marks.push(0);
-    } else { 
-        averageMark = sumInDiscipline / marksArray.length; 
-        marks.push(averageMark);
-        }
-
-    newData = (`${discipline}`); 
-    newDataArr.push(newData);
-    }
-
-    //вычисляем среднее общее
-    function getAverageMark(marks) {    
-        let marksSum = 0;
-        for (let i = 0; i < marks.length; i++) {
-            marksSum += marks[i];
+    let marksArray; //массив оценок в предмете
+    let averageMark; //средняя оценка по предмету
+    let dataKeys = Object.keys(data); //массив с предметами
+    let dataMarks = []; //массив со средними оценками соответственно списку предметов
+    let average; //общий средний балл по всем предметам
+    let newData = {};
+    
+  /**
+  * @function Вспомогательная функция для нахождения 
+  * среднего арифметического из массива чисел 
+  * 
+  * @param {Array} marks - любой готовый массив оценок 
+  * @returns {Number} среднее арифметическое
+  */
+    function getAverageMark(marks) {
+        
+        let sum = 0;
+        let length = marks.length;
+    
+        for (let i = 0; i < length; i++) {
+            if (typeof marks[i] !== 'number') {
+                console.log('Некорректно введены одна или несколько оценок!');
+                return;
+            } else if (!marks[i]) {
+                marks.push(0);
             }
-        return marksSum / marks.length;
+            sum += marks[i];    
+        }
+        
+        if (Number.isNaN(sum / length)) {
+            return 0;
+        } else return sum / length;
+    }
+
+  /**
+  * @name newData - создание нового объекта из полученных массивов:
+  * @property из dataKeys
+  * @values  из dataMarks
+  * 
+  * + Добавление нового свойства в новый объект
+  */
+    for (let discipline in data) {
+        marksArray = data[discipline];
+        averageMark = getAverageMark(marksArray);
+        dataMarks.push(averageMark);
     }  
-    let average = getAverageMark(marks);  
+    
+    for (let i = 0; i < dataKeys.length; i++) {
+      newData[dataKeys[i]] = dataMarks[i];
+    }
 
-    //получаем два ассоц.массива
-    console.log(newDataArr);
-    console.log(marks);
-    //и новое значение
-    console.log(average);
-
-    //собираем новый объект по новым данным
-    let postData = {};
-
-    for (let i = 0; i < newDataArr.length; i++) {
-        let newProp = newDataArr[i];
-        postData[newProp] = marks[i];
-    }  
-    postData['average'] = average;
-
-    console.log(postData);  
-}  
+    average = getAverageMark(dataMarks);
+    newData['average'] = average;
+    
+    console.log(newData); 
+}
 
 
 
