@@ -49,7 +49,7 @@ class Triangle {
         };
         
         try {
-            triangleChek = new Triangle(a, b, c);
+            return new Triangle(a, b, c);
         } catch {
             return triangleChek;
         } 
